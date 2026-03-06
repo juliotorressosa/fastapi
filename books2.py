@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Body
+from typing import Optional
 from pydantic import BaseModel, Field
 import uvicorn
 
@@ -28,7 +29,7 @@ BOOKS = [
 ]
 
 class BookRequest(BaseModel):
-    id: int #= Field(None)
+    id: Optional[int] = None  #Field(default=None)
     title: str = Field(min_length = 3)
     author:str = Field(min_length=1)
     description:str = Field(min_length=1,max_length=100)
@@ -44,7 +45,7 @@ async def create_book(book_request:BookRequest):
     BOOKS.append(find_book_id(new_book))
     
 def find_book_id(book:Book):
-    if len(list)>0:
+    if len(BOOKS)>0:
         book.id = BOOKS[-1].id + 1 
     else:
         book.id = 1
