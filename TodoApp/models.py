@@ -9,9 +9,9 @@ class Users(Base):
     first_name = Column(String)
     last_name = Column(String)
     hashed = Column(String)
-    isactive = Column(Boolean, default=True)
+    is_active = Column(Boolean, default=True)
     role = Column(String)
-     
+
      
 class Todos(Base):
     __tablename__= 'todos'
