@@ -17,6 +17,7 @@ class CreateUserRequest(BaseModel):
     first_name:str
     last_name: str
     password: str
+    isactive: bool
     role:str
     
 def get_db():
@@ -44,11 +45,10 @@ async def create_user(db:db_dependency,
         username = create_user_request.username,
         first_name = create_user_request.first_name,
         last_name = create_user_request.last_name,
-        role = create_user_request.role,
         hashed = bcrypt_contex.hash(create_user_request.password),
-        is_active = True
+        isactive = True,
+        role = create_user_request.role
     )
-    
     db.add(create_user_model)
     db.commit
 
