@@ -2,7 +2,7 @@ from typing import Annotated
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Path,Query,status
 from database import SessionLocal
-from models import Todos
+from models import Todos, Users
 from pydantic import BaseModel,Field
 
 router = APIRouter()
@@ -31,6 +31,10 @@ class TodoRequest(BaseModel):
 @router.get("/",status_code=status.HTTP_200_OK)
 async def read_all(db:db_dependency):
     return db.query(Todos).all()
+
+@router.get("/users",status_code=status.HTTP_200_OK)
+async def read_users(db:db_dependency):
+    return db.query(Users).all()
 
 @router.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)
 async def read_todo(db:db_dependency,todo_id:int=Path(gt=0)):
