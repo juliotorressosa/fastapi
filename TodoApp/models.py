@@ -9,7 +9,7 @@ class Users(Base):
     first_name = Column(String)
     last_name = Column(String)
     hashed = Column(String)
-    is_active = Column(Boolean, default=True)
+    isactive = Column(Boolean, default=True)
     role = Column(String)
 
      
