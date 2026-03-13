@@ -8,7 +8,7 @@ from models import Users
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
 from jose import jwt, JWTError
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 
 router = APIRouter(
     prefix='/auth',
@@ -67,7 +67,7 @@ async def get_current_user(token:Annotated[str,Depends(oauth2_bearer)]):
         if username in None or user_id is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail = 'Could not validate user.')
-        return {'username':username, 'id':user_id,'role':user_role}
+        return {'username':username, 'id':user_id,'user_role':user_role}
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail = 'Could not validate user')
@@ -89,7 +89,7 @@ async def create_user(db:db_dependency,
     db.commit
 
 
-@router.post("/token",resoponse_model = Token)
+@router.post("/token",response_model = Token)
 async def login_for_access_token(form_data:Annotated[OAuth2PasswordRequestForm,Depends()],
                                  db:db_dependency):   
     user = authenticate_user(form_data.username, form_data.password,db)
