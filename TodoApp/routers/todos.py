@@ -7,10 +7,7 @@ from models import Todos, Users
 from pydantic import BaseModel,Field
 from .auth import get_current_user
 
-router = APIRouter(
-    prefix='/auth', #this prefex will classify the apis by their kind, in this case, auth and default
-    tags=['auth']
-)
+router = APIRouter()
 
 #models.Base.metadata.create_all(bind=engine)
 
